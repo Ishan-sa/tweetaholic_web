@@ -3,6 +3,7 @@ import Button from '../Button/Button'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
 
 export default function SignedOut() {
     const r = useRouter();
@@ -13,6 +14,7 @@ export default function SignedOut() {
     const [loginPass, setLoginPass] = useState('');
     const [loginCont, setLoginCont] = useState(true);
     const [registerCont, setRegisterCont] = useState(false);
+    const [loginAndRegister, setLoginAndRegister] = useState(true);
 
     const Register = async (e) => {
         e.preventDefault();
@@ -26,13 +28,22 @@ export default function SignedOut() {
         }
     }
 
-    const Login = async () => {
-
+    const Login = async (e) => {
+        e.preventDefault();
+        const auth = getAuth();
+        try {
+            const user = await signInWithEmailAndPassword(
+                auth,
+                loginEm,
+                loginPass
+            )
+            console.log(user)
+        } catch (err) {
+            console.log(err.message)
+        }
     }
 
-    const Logout = async () => {
 
-    }
 
     return (
         <div className="flex w-[100vw] justify-center items-center m-auto">
@@ -59,10 +70,10 @@ export default function SignedOut() {
                     <div className='m-auto'>
                         <Button
                             txt="Sign in"
-                            onBtnClick={() => alert('This doesn\'t work yet')}
+                            onBtnClick={Login}
                         />
                     </div>
-                    <p>Don't have an account? <span onClick={() => r.push('/auth/signup')} className='text-white'>Sign Up</span> here </p>
+                    {/* <p>Don't have an account? <span onClick={() => r.push('/auth/signup')} className='text-white'>Sign Up</span> here </p> */}
                 </form>
                 <div>
                     <p className="text-2xl">Please sign in to continue</p>

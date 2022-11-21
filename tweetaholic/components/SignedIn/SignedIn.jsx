@@ -2,9 +2,13 @@ import { useSession } from "next-auth/react"
 import { signOut } from "next-auth/react"
 import Button from "../Button/Button";
 import { useState, useEffect } from "react";
+import NewTweet from "../NewTweet/NewTweet";
+
 
 export default function SignedIn() {
     const { data: session } = useSession();
+    const [googleSignOut, setGoogleSignOut] = useState(false);
+    const [emailSignOut, setEmailSignOut] = useState(false);
     // const [tweet, setTweet] = useState([]);
     // const [tweetText, setTweetText] = useState("");
     // useEffect(() => {
@@ -39,21 +43,13 @@ export default function SignedIn() {
         <div>
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <img src={session.user.image} alt="" className="rounded-full w-[50px]" />
-                    <p>Welcome, {session.user.name}!</p>
+                    {/* <img src={session.user.image ? null : "img"} alt="" className="rounded-full w-[50px]" /> */}
+                    {/* <p>Welcome, {session.user.name ? session.user.name : "name"}!</p> */}
+                    <p>Welcome user</p>
                 </div>
-                <Button
-                    txt="Sign out"
-                    onBtnClick={() => signOut()}
-                />
+                <Button txt="Sign out" onBtnClick={() => signOut()} />
             </div>
-            {/* <p className="text-5xl text-center"> signed in</p>
-            <p>{tweet}</p>
-            <input type="text" value={tweetText} onChange={handleTweet} />
-            <button onClick={addToNotes}>Add</button>
-            {
-                tweet.map(n => <li key={n}>{n}</li>)
-            } */}
+            <NewTweet />
         </div>
     )
 }
