@@ -6,7 +6,7 @@ import { useState } from "react";
 export default function NewTweet() {
     const [tweet, setTweet] = useState("");
     const [tweetContent, setTweetContent] = useState("");
-    const handleSubmit = async (e) => {
+    const addToDb = async (e) => {
         e.preventDefault();
         try {
             const db = getFirestore();
@@ -14,11 +14,7 @@ export default function NewTweet() {
                 tweet: tweet,
                 content: tweetContent,
                 createdAt: Timestamp.now(),
-                // tweet: "tweet",
-                // content: "content",
-                // createdAt: Timestamp.now(),
             });
-            console.log("Document written with ID: ", docRef.id);
         }
         catch (err) {
             console.log(err.message);
@@ -26,13 +22,8 @@ export default function NewTweet() {
     }
     return (
         <>
-            {/* <div>NewTweet</div> */}
-            {/* <Button
-                txt="New Tweet"
-                onBtnClick={handleSubmit}
-            /> */}
             <div className="flex bg-gray-400 px-4 py-4">
-                <form action="" onSubmit={handleSubmit}>
+                <form action="" onSubmit={addToDb}>
                     <div className="flex flex-col gap-3">
                         <div className="flex flex-col">
                             <label htmlFor="heading">New tweet</label>

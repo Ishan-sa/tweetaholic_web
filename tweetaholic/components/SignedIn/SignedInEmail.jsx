@@ -1,6 +1,7 @@
 import { signOut } from "firebase/auth"
 import { getAuth } from "firebase/auth";
 import { useRouter } from "next/router";
+import NewTweet from "../NewTweet/NewTweet";
 
 export default function SignedInEmail() {
     const r = useRouter();
@@ -13,6 +14,7 @@ export default function SignedInEmail() {
         <>
             <button className="bg-red-300" onClick={Logout}>signOut</button>
             <div>SignedInEmail</div>
+            <NewTweet />
         </>
     )
 }
